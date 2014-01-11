@@ -103,6 +103,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ServerSetup.resx">
       <DependentUpon>ServerSetup.cs</DependentUpon>
@@ -122,6 +123,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info_icon&amp;24.png" />
+    <None Include="Resources\doc_import_icon&amp;24.png" />
+    <None Include="Resources\checkbox_checked_icon&amp;24.png" />
+    <None Include="Resources\chart_line_icon&amp;24.png" />
+    <None Include="Resources\cog_icon&amp;24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

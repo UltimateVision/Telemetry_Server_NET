@@ -28,16 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripShowSetup = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTestChannel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripStatistics = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.websiteTransferButton = new System.Windows.Forms.Button();
@@ -49,6 +45,9 @@
             this.webStatusLabel = new System.Windows.Forms.Label();
             this.readDataButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.toolStripShowSetup = new System.Windows.Forms.ToolStripButton();
+            this.toolStripTestChannel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripStatistics = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -101,36 +100,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(473, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripShowSetup
-            // 
-            this.toolStripShowSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripShowSetup.Image = ((System.Drawing.Image)(resources.GetObject("toolStripShowSetup.Image")));
-            this.toolStripShowSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripShowSetup.Name = "toolStripShowSetup";
-            this.toolStripShowSetup.Size = new System.Drawing.Size(23, 22);
-            this.toolStripShowSetup.Text = "Server Setup";
-            this.toolStripShowSetup.Click += new System.EventHandler(this.toolStripShowSetup_Click);
-            // 
-            // toolStripTestChannel
-            // 
-            this.toolStripTestChannel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripTestChannel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripTestChannel.Image")));
-            this.toolStripTestChannel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripTestChannel.Name = "toolStripTestChannel";
-            this.toolStripTestChannel.Size = new System.Drawing.Size(23, 22);
-            this.toolStripTestChannel.Text = "Test channels";
-            this.toolStripTestChannel.Click += new System.EventHandler(this.toolStripTestChannel_Click);
-            // 
-            // toolStripStatistics
-            // 
-            this.toolStripStatistics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripStatistics.Image = ((System.Drawing.Image)(resources.GetObject("toolStripStatistics.Image")));
-            this.toolStripStatistics.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripStatistics.Name = "toolStripStatistics";
-            this.toolStripStatistics.Size = new System.Drawing.Size(23, 22);
-            this.toolStripStatistics.Text = "Statistics";
-            this.toolStripStatistics.Click += new System.EventHandler(this.toolStripStatistics_Click);
             // 
             // statusStrip1
             // 
@@ -239,10 +208,40 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Data";
             // 
+            // toolStripShowSetup
+            // 
+            this.toolStripShowSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripShowSetup.Image = global::Telemetry_Server.NET.Properties.Resources.cog_icon_24;
+            this.toolStripShowSetup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripShowSetup.Name = "toolStripShowSetup";
+            this.toolStripShowSetup.Size = new System.Drawing.Size(23, 22);
+            this.toolStripShowSetup.Text = "Server Setup";
+            this.toolStripShowSetup.Click += new System.EventHandler(this.toolStripShowSetup_Click);
+            // 
+            // toolStripTestChannel
+            // 
+            this.toolStripTestChannel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripTestChannel.Image = global::Telemetry_Server.NET.Properties.Resources.checkbox_checked_icon_24;
+            this.toolStripTestChannel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripTestChannel.Name = "toolStripTestChannel";
+            this.toolStripTestChannel.Size = new System.Drawing.Size(23, 22);
+            this.toolStripTestChannel.Text = "Test channels";
+            this.toolStripTestChannel.Click += new System.EventHandler(this.toolStripTestChannel_Click);
+            // 
+            // toolStripStatistics
+            // 
+            this.toolStripStatistics.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripStatistics.Image = global::Telemetry_Server.NET.Properties.Resources.chart_line_icon_24;
+            this.toolStripStatistics.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripStatistics.Name = "toolStripStatistics";
+            this.toolStripStatistics.Size = new System.Drawing.Size(23, 22);
+            this.toolStripStatistics.Text = "Statistics";
+            this.toolStripStatistics.Click += new System.EventHandler(this.toolStripStatistics_Click);
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.Image = global::Telemetry_Server.NET.Properties.Resources.info_icon_24;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
