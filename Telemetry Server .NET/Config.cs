@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Config.cs
+ * Class containing app's configuration
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +22,7 @@ namespace Telemetry_Server.NET
         public static bool usePost;
         public static bool useGet;
 
+        //Construct url for POST/GET request, replacing [DATA] mark with proper data from TelemetryPacket or DataPacket
         public static string GetURLData(string data = null)
         {
             StringBuilder sb = new StringBuilder();
@@ -28,6 +34,7 @@ namespace Telemetry_Server.NET
             return sb.ToString();
         } 
 
+        //Save configuration to config.ini file
         public static void SerializeConfig()
         {
             using(StreamWriter sw = new StreamWriter("config.ini"))
@@ -45,6 +52,7 @@ namespace Telemetry_Server.NET
             }
         }
 
+        //Set default configuration
         public static void SetDefault()
         {
             readInterval = 500;

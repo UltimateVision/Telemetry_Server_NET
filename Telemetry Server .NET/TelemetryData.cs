@@ -111,18 +111,23 @@ namespace Telemetry_Server.NET
         }
 
         bool _isValid;
+        PacketMode _mode;
 
+        //For live-updated data
         public TelemetryData()
         {
             _fuelStat = new TripStat();
             _dataArray = new Object[16];
             _isValid = false;
+            _mode = PacketMode.Live;
         }
 
+        //For static data
         public TelemetryData(string data)
         {
             _fuelStat = new TripStat();
             _dataArray = new Object[16];
+            _mode = PacketMode.Static;
             Update(data);
         }
 
@@ -148,9 +153,13 @@ namespace Telemetry_Server.NET
                             _dataArray[i] = Convert.ToDouble(splits[i], new CultureInfo("en-US"));
                     }
 
-                    _fuelStat.increaseDistance(odometer);
-                    _fuelStat.increaseFuel(fuel);
-                    fuelAvgConsumption = _fuelStat.avgFuelConsumption;
+                    //If this is live-updated packet, calculate average fuel consumption
+                    if (_mode == PacketMode.Live)
+                    {
+                        _fuelStat.increaseDistance(odometer);
+                        _fuelStat.increaseFuel(fuel);
+                        fuelAvgConsumption = _fuelStat.avgFuelConsumption;
+                    }
 
                     _isValid = true;
                 }
@@ -236,6 +245,16 @@ namespace Telemetry_Server.NET
                 return typeof(uint);
             else
                 return typeof(double);
+        }
+
+        public void SetPacketMode(PacketMode mode)
+        {
+            _mode = mode;
+        }
+
+        public PacketMode GetPacketMode()
+        {
+            return _mode;
         }
     }
 }

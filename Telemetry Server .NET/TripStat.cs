@@ -1,4 +1,7 @@
-﻿//Class used to count driven distance, collect information about fuel tank state and generating average fuel consumption rate
+﻿/*
+ * TripStat.cs
+ * Class used to count driven distance, collect information about fuel tank state and generating average fuel consumption rate
+ */
 
 using System;
 using System.Collections.Generic;

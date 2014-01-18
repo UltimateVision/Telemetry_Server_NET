@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * DataPacket.cs
+ * Interface for all .*Data classes
+ * Channel and PacketMode codes
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +71,12 @@ namespace Telemetry_Server.NET
         CriticalWaterTemp,
         CriticalBatteryVoltage,
         WheelsCount
+    }
+
+    enum PacketMode
+    {
+        Static = 0,
+        Live
     }
 
     interface DataPacket

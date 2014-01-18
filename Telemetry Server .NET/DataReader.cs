@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * DataReader.cs
+ * Class handling reading data from dataShare.data file
+ * Thread safe... probably ;)
+ * */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +27,7 @@ namespace Telemetry_Server.NET
 
         public static StreamWriter writer;
 
+        //Enables overwriting sended data by channel testing code
         public static bool overrideData
         {
             get
@@ -38,16 +45,19 @@ namespace Telemetry_Server.NET
         {
             _run = true;
 
+            //Create log file if user wants to
             if (Config.logData)
             {
                 StringBuilder filename = new StringBuilder(DateTime.Now.ToString());
                 filename.Replace(':', '_');
                 writer = new StreamWriter(filename.ToString() + ".tds");
             }
+
             while (_run)
             {
                 try
                 {
+                    //A bit ugly, but working hack to obtain data form file
                     FileStream stream = null;
                     while (true)
                     {
@@ -58,6 +68,8 @@ namespace Telemetry_Server.NET
                         }
                         catch { }
                     }
+
+                    //Update packet and log
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         string data = reader.ReadLine();
@@ -69,13 +81,14 @@ namespace Telemetry_Server.NET
                 }
                 catch (FileNotFoundException)
                 {
-                    MessageBox.Show("Data file not found!");
+                    MessageBox.Show("Data file not found!"); //Whoops... dataShare.data couldn't be found
                     if (Config.logData)
                         writer.Close();
                     return;
                 }
                 Thread.Sleep(Config.readInterval);
 
+                //Pause reading while user is testing channels
                 while(_overrideData)
                     Thread.Sleep(Config.readInterval);
             }
