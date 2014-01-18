@@ -1,9 +1,4 @@
-﻿/*
- * Config.cs
- * Class containing app's configuration
- * */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +6,9 @@ using System.IO;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class containing app's configuration
+    /// </summary>
     class Config
     {
         public static string dataSharePath;
@@ -22,7 +20,11 @@ namespace Telemetry_Server.NET
         public static bool usePost;
         public static bool useGet;
 
-        //Construct url for POST/GET request, replacing [DATA] mark with proper data from TelemetryPacket or DataPacket
+        /// <summary>
+        /// Construct url for POST/GET request, replacing [DATA] mark with proper data from TelemetryPacket or DataPacket
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns>URL if using GET or POST formatted data</returns>
         public static string GetURLData(string data = null)
         {
             StringBuilder sb = new StringBuilder();
@@ -34,7 +36,9 @@ namespace Telemetry_Server.NET
             return sb.ToString();
         } 
 
-        //Save configuration to config.ini file
+        /// <summary>
+        /// Save configuration to config.ini file
+        /// </summary>
         public static void SerializeConfig()
         {
             using(StreamWriter sw = new StreamWriter("config.ini"))
@@ -52,7 +56,9 @@ namespace Telemetry_Server.NET
             }
         }
 
-        //Set default configuration
+        /// <summary>
+        /// Set default configuration
+        /// </summary>
         public static void SetDefault()
         {
             readInterval = 500;
@@ -62,6 +68,9 @@ namespace Telemetry_Server.NET
             urlFormat = "?data=[DATA]";
         }
 
+        /// <summary>
+        /// Read configuration from config.ini file
+        /// </summary>
         public static void ReadConfig()
         {
             try

@@ -1,16 +1,13 @@
-﻿/*
- * DataPacket.cs
- * Interface for all .*Data classes
- * Channel and PacketMode codes
- * */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Telemetry channel codes
+    /// </summary>
     enum Channel
     {
         //Telemetry
@@ -73,12 +70,21 @@ namespace Telemetry_Server.NET
         WheelsCount
     }
 
+    /// <summary>
+    /// PacketMode codes
+    /// </summary>
+    /// <remarks>
+    /// Possible values: Static, Live
+    /// </remarks>
     enum PacketMode
     {
         Static = 0,
         Live
     }
 
+    /// <summary>
+    /// Interface for all .*Data classes
+    /// </summary>
     interface DataPacket
     {
         void Update(string data);

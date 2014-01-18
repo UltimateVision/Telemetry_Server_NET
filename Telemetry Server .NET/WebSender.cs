@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class handling data transfer using POST/GET requests
+    /// </summary>
     class WebSender
     {
         private Form1 form1Controller; //UI handle
@@ -16,11 +19,18 @@ namespace Telemetry_Server.NET
 
         private static bool run = false;
 
+        /// <summary>
+        /// Creates new WebSender instance
+        /// </summary>
+        /// <param name="f1">Reference to UI</param>
         public WebSender(Form1 f1)
         {
             form1Controller = f1;
         }
 
+        /// <summary>
+        /// Starts thread for web transmission
+        /// </summary>
         public void StartTransmission()
         {
             run = true;
@@ -28,6 +38,12 @@ namespace Telemetry_Server.NET
             webSenderThread.Start();
         }
 
+        /// <summary>
+        /// Sets stop flag to safely end thread
+        /// </summary>
+        /// <remarks>
+        /// May kill thread using Abort() method if it won't end during 4 seconds period
+        /// </remarks>
         public void StopTransmission()
         {
             run = false;
@@ -43,6 +59,9 @@ namespace Telemetry_Server.NET
                 webSenderThread.Abort();
         }
 
+        /// <summary>
+        /// Push telemetry data using GET request
+        /// </summary>
         private void UseGET()
         {
             // Create a request for the URL. 
@@ -66,6 +85,9 @@ namespace Telemetry_Server.NET
             form1Controller.Invoke(form1Controller.changeWebStatus, responseFromServer);
         }
 
+        /// <summary>
+        /// Push telemetry data using POST request
+        /// </summary>
         private void UsePOST()
         {
             //The method we will use to send the data, this can be POST or GET.
@@ -139,6 +161,9 @@ namespace Telemetry_Server.NET
             form1Controller.Invoke(form1Controller.changeWebStatus, responseFromServer);
         }
 
+        /// <summary>
+        /// Function used by thread, calling apropriate method for contacting web server
+        /// </summary>
         private void ContactServer()
         {
             while (run)

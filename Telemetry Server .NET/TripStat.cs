@@ -1,9 +1,4 @@
-﻿/*
- * TripStat.cs
- * Class used to count driven distance, collect information about fuel tank state and generating average fuel consumption rate
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class used to count driven distance, collect information about fuel tank state and generating average fuel consumption rate
+    /// </summary>
     class TripStat
     {
         double _distanceDriven = 0;
@@ -53,6 +51,10 @@ namespace Telemetry_Server.NET
         {
         }
 
+        /// <summary>
+        /// Increases distance driven during active session
+        /// </summary>
+        /// <param name="odometer">Value of truck's odometer</param>
         public void increaseDistance(double odometer)
         {
             if (lastOdometerState != 0)
@@ -73,6 +75,10 @@ namespace Telemetry_Server.NET
             }
         }
 
+        /// <summary>
+        /// Increases amount of fuel burned during active session
+        /// </summary>
+        /// <param name="fuelState">Value of amount of fuel in truck's tank</param>
         public void increaseFuel(double fuelState)
         {
             if (lastFuelState != 0)
@@ -93,6 +99,9 @@ namespace Telemetry_Server.NET
             }
         }
 
+        /// <summary>
+        /// Starts new session
+        /// </summary>
         public void resetData()
         {
             lock (this)

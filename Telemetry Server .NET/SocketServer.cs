@@ -9,6 +9,11 @@ using System.IO;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class that handles multi-threaded socket server using TCP/IP protocol
+    /// <para>Handles up to four clients</para>
+    /// <para>Thread safe</para>
+    /// </summary>
     class SocketServer
     {
         private static object _lock = new object(); //lock on run variable
@@ -26,6 +31,10 @@ namespace Telemetry_Server.NET
         List<int> slotsAvailable;
         List<int> slotsOcuppied;
 
+        /// <summary>
+        /// Creates new SocketServer instance
+        /// </summary>
+        /// <param name="controller">Reference to UI</param>
         public SocketServer(Form1 controller)
         {
             form1Controller = controller;
@@ -36,6 +45,13 @@ namespace Telemetry_Server.NET
             slotsOcuppied = new List<int>();
         }
 
+        /// <summary>
+        /// Gets local IP Address
+        /// </summary>
+        /// <remarks>
+        /// May return wrong value under certain circumstances.
+        /// </remarks>
+        /// <returns>IP Address as String</returns>
         public static string GetLocalIP()
         {
             IPHostEntry host;
@@ -49,6 +65,9 @@ namespace Telemetry_Server.NET
             return ipAddr;
         }
 
+        /// <summary>
+        /// Start threads containing connection listener and slot manager
+        /// </summary>
         public void Start()
         {
             listener = new TcpListener(IPAddress.Any, 19000);
@@ -61,6 +80,9 @@ namespace Telemetry_Server.NET
             slotWatcher.Start();
         }
 
+        /// <summary>
+        /// Set flag requesting server stop
+        /// </summary>
         public void Stop()
         {
             lock (_lock)
@@ -69,7 +91,12 @@ namespace Telemetry_Server.NET
             listener.Stop();
         }
 
-        //Accepts clients connections
+        /// <summary>
+        /// Accepts clients connections
+        /// </summary>
+        /// <remarks>
+        /// May pause if there's no free slots left
+        /// </remarks>
         private void ListenForClients()
         {
             while (run)
@@ -83,9 +110,11 @@ namespace Telemetry_Server.NET
                         clients[slot] = new Thread(new ParameterizedThreadStart(HandleClient));
                         clients[slot].Start(client);
 
+                        //Update UI's client counter invoking incrementClient delegate
                         lock(_formControlLock)
-                            form1Controller.Invoke(form1Controller.incrementClient); //Update UI's client counter
+                            form1Controller.Invoke(form1Controller.incrementClient);
 
+                        //Update free slots status
                         lock (_lock2)
                         {
                             slotsOcuppied.Add(slot);
@@ -99,6 +128,7 @@ namespace Telemetry_Server.NET
                 }
                 else
                 {
+                    //Sleep until one of slots will be free
                     while (true)
                     {
                         int c = 0;
@@ -115,7 +145,10 @@ namespace Telemetry_Server.NET
             Console.WriteLine("Client listener ended!");
         }
 
-        //Handles client behaviour
+        /// <summary>
+        /// Handles client behaviour
+        /// </summary>
+        /// <param name="obj">Instance of TcpClient Class</param>
         private void HandleClient(object obj)
         {
             TcpClient client = (TcpClient)obj;
@@ -140,14 +173,17 @@ namespace Telemetry_Server.NET
                 }
             }
 
+            //Update UI's client counter invoking decrementClient delegate
             lock (_formControlLock)
-                form1Controller.Invoke(form1Controller.decrementClient); //Update UI's client counter
+                form1Controller.Invoke(form1Controller.decrementClient);
 
             client.Close();
             Console.WriteLine("Server terminated connection!");
         }
 
-        //Slot manager thread function
+        /// <summary>
+        /// Slot manager thread function
+        /// </summary>
         private void SlotWatcher()
         {
             while (run)

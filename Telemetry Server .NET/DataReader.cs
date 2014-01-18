@@ -1,10 +1,4 @@
-﻿/*
- * DataReader.cs
- * Class handling reading data from dataShare.data file
- * Thread safe... probably ;)
- * */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,12 +8,15 @@ using System.Windows.Forms;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class handling reading data from dataShare.data file
+    /// <para>Thread safe... probably ;)</para>
+    /// </summary>
     class DataReader
     {
         private static object _lock = new object();
         private static object _lock2 = new object();
 
-        public static string dataFilePath;
         public static DataPacket dataPacket;
 
         private static bool _overrideData = false;
@@ -27,7 +24,9 @@ namespace Telemetry_Server.NET
 
         public static StreamWriter writer;
 
-        //Enables overwriting sended data by channel testing code
+        /// <summary>
+        /// Enables overwriting sended data by channel testing code
+        /// </summary>
         public static bool overrideData
         {
             get
@@ -41,6 +40,9 @@ namespace Telemetry_Server.NET
             }
         }
 
+        /// <summary>
+        /// Reads telemetry data from location specified in <seealso cref="Config.dataPathShare"/>
+        /// </summary>
         public static void ReadData()
         {
             _run = true;
@@ -97,6 +99,9 @@ namespace Telemetry_Server.NET
                 writer.Close();
         }
 
+        /// <summary>
+        /// Safely informs reading thread to stop
+        /// </summary>
         public static void StopReader()
         {
             lock (_lock2)
