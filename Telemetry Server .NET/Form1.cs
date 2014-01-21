@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+using DataPacket;
+using TelemetryPlugin;
+
 namespace Telemetry_Server.NET
 {
     public partial class Form1 : Form
@@ -51,6 +54,8 @@ namespace Telemetry_Server.NET
             decrementClient = new DecrementClient(decrementClientCount);
             changeWebStatus = new ChangeWebServerStatus(changeWebStatusText);
             ipLabel.Text += ' ' + SocketServer.GetLocalIP();
+
+            PluginLoader.LoadPlugins();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -140,6 +145,33 @@ namespace Telemetry_Server.NET
             {
                 if (!webTransferRunning)
                 {
+                    if (PluginLoader.plugins.Count > 0)
+                    {
+                        ITelemetryPlugin plugin;
+                        try
+                        {
+                            plugin = PluginLoader.GetPlugin(PluginType.WebLogHelper);
+                            if (plugin.isActive)
+                            {
+                                IWebLogPlugin p = (IWebLogPlugin)plugin;
+                                if (p.Initialize() == ActionResult.Success)
+                                {
+                                    Config.websiteAddress = p.url;
+                                    Config.urlFormat = p.dataFormat;
+                                    if (p.usePOST)
+                                        Config.usePost = true;
+                                    else
+                                        Config.useGet = true;
+                                    p.Dispose();
+                                }
+                                else
+                                    return;
+                            }
+                        }
+                        catch (PluginTypeNotFoundException)
+                        { }
+                    }
+
                     webSender.StartTransmission();
                     webTransferRunning = true;
                     websiteTransferButton.Text = "Stop";
@@ -185,10 +217,10 @@ namespace Telemetry_Server.NET
             stats.Show();
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripButtonPlugins_Click(object sender, EventArgs e)
         {
-            AboutBox1 about = new AboutBox1();
-            about.ShowDialog();
+            PluginManager pm = new PluginManager();
+            pm.ShowDialog();
         }
     }
 }

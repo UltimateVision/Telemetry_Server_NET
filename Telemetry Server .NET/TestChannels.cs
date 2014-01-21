@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+using DataPacket;
+
 namespace Telemetry_Server.NET
 {
     public partial class TestChannels : Form

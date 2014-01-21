@@ -5,68 +5,61 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Telemetry_Server.NET
+namespace DataPacket
 {
-    class DiagnosticData : DataPacket
+    class PositionData : IDataPacket
     {
+        private readonly object sync = new object();
         Object[] _dataArray;
+        bool _isValid;
 
-        public double chassis
+        public double positionX
         {
             get { return (double)_dataArray[0]; }
             set { _dataArray[0] = value; }
         }
 
-        public double cabin
+        public double positionY
         {
             get { return (double)_dataArray[1]; }
             set { _dataArray[1] = value; }
         }
 
-        public double engine
+        public double positionZ
         {
             get { return (double)_dataArray[2]; }
             set { _dataArray[2] = value; }
         }
 
-        public double transmission
+        public PositionData()
         {
-            get { return (double)_dataArray[3]; }
-            set { _dataArray[3] = value; }
-        }
-
-        public double tires
-        {
-            get { return (double)_dataArray[4]; }
-            set { _dataArray[4] = value; }
-        }
-
-        bool _isValid;
-
-        public DiagnosticData()
-        {
-            _dataArray = new Object[5];
+            _dataArray = new Object[3];
             _isValid = false;
         }
 
-        public DiagnosticData(string data)
+        public PositionData(string data)
         {
-            _dataArray = new Object[5];
+            _dataArray = new Object[3];
             Update(data);
         }
 
         public void Update(string data)
         {
-            string[] split = data.Split('|');
-            try
+            lock (sync)
             {
-                for(int i = 0; i < _dataArray.Length; i++)
-                    _dataArray[i] = Convert.ToDouble(split[i], new CultureInfo("en-US"));
-                _isValid = true;
-            }
-            catch (IndexOutOfRangeException)
-            {
-                _isValid = false;
+                string[] split = data.Split('|');
+                try
+                {
+                    for (int i = 0; i < split.Length; i++)
+                    {
+                        _dataArray[i] = Convert.ToDouble(split[i], new CultureInfo("en-US"));
+                    }
+                    _isValid = true;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    _isValid = false;
+                }
             }
         }
 
@@ -75,19 +68,20 @@ namespace Telemetry_Server.NET
             if(obj.GetType() != typeof(double))
                 throw new ArgumentException("Data type mismatch - double expected");
 
-            int startingChannel = (int)Channel.CabinDiag;
+            int startingChannel = (int)Channel.PlayerPosX;
             int destination = (int)dataChannel - startingChannel;
-            if (destination > 4)
+            if (destination > 2)
                 throw new ArgumentException("Unknown channel!");
 
-            _dataArray[destination] = obj;
+            lock(sync)
+                _dataArray[destination] = obj;
         }
 
         public object GetChannelValue(Channel dataChannel)
         {
-            int startingChannel = (int)Channel.CabinDiag;
+            int startingChannel = (int)Channel.PlayerPosX;
             int destination = (int)dataChannel - startingChannel;
-            if (destination > 4)
+            if (destination > 2)
                 throw new ArgumentException("Unknown channel!");
 
             return _dataArray[destination];
@@ -105,8 +99,8 @@ namespace Telemetry_Server.NET
 
         public void GetChannelRange(out Channel begin, out Channel end)
         {
-            begin = Channel.CabinDiag;
-            end = Channel.TiresDiag;
+            begin = Channel.PlayerPosX;
+            end = Channel.PlayerPosZ;
         }
 
         public override string ToString()
@@ -118,7 +112,7 @@ namespace Telemetry_Server.NET
                 sb.Append(d.ToString(new CultureInfo("en-US")));
                 sb.Append('|');
             }
-            sb.Remove(sb.Length - 1, 1);
+            sb.Remove(sb.Length - 1,1);
 
             return sb.ToString();
         }

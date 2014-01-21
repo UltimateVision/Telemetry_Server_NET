@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Telemetry_Server.NET
+namespace DataPacket
 {
     /// <summary>
     /// Telemetry channel codes
@@ -85,7 +85,7 @@ namespace Telemetry_Server.NET
     /// <summary>
     /// Interface for all .*Data classes
     /// </summary>
-    interface DataPacket
+    interface IDataPacket
     {
         void Update(string data);
         void SetChannelValue(Channel dataChannel, Object obj);

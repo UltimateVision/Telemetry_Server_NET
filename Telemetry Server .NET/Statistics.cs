@@ -9,16 +9,18 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
+using DataPacket;
+
 namespace Telemetry_Server.NET
 {
     public partial class Statistics : Form
     {
-        List<DataPacket> telemetry;
+        List<IDataPacket> telemetry;
 
         public Statistics()
         {
             InitializeComponent();
-            telemetry = new List<DataPacket>();
+            telemetry = new List<IDataPacket>();
             toolStripStatusLabel1.Text = "Status: No data";
             var values = Enum.GetValues(typeof(Channel));
             foreach (Enum channel in values)
@@ -26,7 +28,11 @@ namespace Telemetry_Server.NET
             openFileDialog1 = new OpenFileDialog();
         }
 
-        //Open telemetry log file
+        /// <summary>
+        /// Open telemetry log file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -47,7 +53,11 @@ namespace Telemetry_Server.NET
             }
         }
 
-        //Code setting up chart with apropriate data
+        /// <summary>
+        /// Code setting up chart with apropriate data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void channelToolStripComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             int blockSize = 20;

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Telemetry_Server.NET
+namespace DataPacket
 {
-    class ConfigurationData : DataPacket
+    class ConfigurationData : IDataPacket
     {
         private readonly object sync = new object();
         Object[] _dataArray;

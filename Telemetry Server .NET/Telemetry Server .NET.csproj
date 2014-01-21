@@ -61,6 +61,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TelemetryPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\TelemetryPlugin.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutBox1.cs">
@@ -70,18 +74,31 @@
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
     <Compile Include="Config.cs" />
-    <Compile Include="ConfigurationData.cs" />
-    <Compile Include="DataPacket.cs" />
+    <Compile Include="DataPacket\ConfigurationData.cs" />
+    <Compile Include="DataPacket\DataPacket.cs" />
     <Compile Include="DataReader.cs" />
-    <Compile Include="DiagnosticData.cs" />
-    <Compile Include="ElectricData.cs" />
+    <Compile Include="DataPacket\DiagnosticData.cs" />
+    <Compile Include="DataPacket\ElectricData.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="PositionData.cs" />
+    <Compile Include="OnOffControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnOffControl.Designer.cs">
+      <DependentUpon>OnOffControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PluginLoader.cs" />
+    <Compile Include="PluginManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PluginManager.Designer.cs">
+      <DependentUpon>PluginManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataPacket\PositionData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerSetup.cs">
@@ -97,8 +114,8 @@
     <Compile Include="Statistics.Designer.cs">
       <DependentUpon>Statistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="TelemetryData.cs" />
-    <Compile Include="TelemetryPacket.cs" />
+    <Compile Include="DataPacket\TelemetryData.cs" />
+    <Compile Include="DataPacket\TelemetryPacket.cs" />
     <Compile Include="TestChannels.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnOffControl.resx">
+      <DependentUpon>OnOffControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PluginManager.resx">
+      <DependentUpon>PluginManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -151,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="connect_icon&amp;48.ico" />
+    <None Include="Resources\import_icon&amp;24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

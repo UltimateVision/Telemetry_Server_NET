@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Telemetry_Server.NET
+namespace DataPacket
 {
-    class TelemetryPacket : DataPacket
+    class TelemetryPacket : IDataPacket
     {
         private readonly object sync = new object();
 

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+using DataPacket;
+
 namespace Telemetry_Server.NET
 {
     /// <summary>
@@ -17,7 +19,7 @@ namespace Telemetry_Server.NET
         private static object _lock = new object();
         private static object _lock2 = new object();
 
-        public static DataPacket dataPacket;
+        public static IDataPacket dataPacket;
 
         private static bool _overrideData = false;
         private static bool _run = true;

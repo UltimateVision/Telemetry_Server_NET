@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
+using TelemetryPlugin;
+
 namespace Telemetry_Server.NET
 {
     /// <summary>
@@ -46,13 +48,8 @@ namespace Telemetry_Server.NET
         /// </remarks>
         public void StopTransmission()
         {
-            run = false;
-
-            Thread.Sleep(2000);
-            if (webSenderThread.IsAlive)
-                webSenderThread.Join();
-            else
-                return;
+            lock(this)
+                run = false;
 
             Thread.Sleep(2000);
             if (webSenderThread.IsAlive)
