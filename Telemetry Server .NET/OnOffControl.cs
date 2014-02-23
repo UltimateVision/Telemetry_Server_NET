@@ -11,6 +11,9 @@ using TelemetryPlugin;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Control handling plugin management: activating/deactivating
+    /// </summary>
     public partial class OnOffControl : UserControl
     {
         public bool isActive = false;

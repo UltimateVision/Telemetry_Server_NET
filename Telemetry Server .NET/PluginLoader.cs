@@ -8,6 +8,9 @@ using TelemetryPlugin;
 
 namespace Telemetry_Server.NET
 {
+    /// <summary>
+    /// Class for handling plugin loading
+    /// </summary>
     class PluginLoader
     {
         static public ICollection<ITelemetryPlugin> plugins = new List<ITelemetryPlugin>();
