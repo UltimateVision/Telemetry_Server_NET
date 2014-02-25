@@ -55,11 +55,10 @@ namespace Telemetry_Server.NET
             if (dataType != typeof(string))
             {
                 string range = rangeTextBox.Text;
+                range = range.Replace(" ", String.Empty); //Get rid of possible spaces
                 int index = range.IndexOf('-');
                 string startVal = range.Substring(0, index);
-                startVal = startVal.Replace(" ", string.Empty);
                 string endVal = range.Substring(index + 1, range.Length - index - 1);
-                endVal = endVal.Replace(" ", string.Empty);
                 sV = Convert.ChangeType(startVal, dataType);
                 eV = Convert.ChangeType(endVal, dataType);
                 tester = new Thread(new ThreadStart(StartTesting));
@@ -67,6 +66,9 @@ namespace Telemetry_Server.NET
             }
         }
 
+        /// <summary>
+        /// Function managing channel testing
+        /// </summary>
         private void StartTesting()
         {
             Object state = sV;
